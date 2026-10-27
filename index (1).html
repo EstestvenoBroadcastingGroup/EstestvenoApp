@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<title>Естествено!</title>
+<style>
+:root{--ink:#000;--card:#555;--bg:#fff;--g:rgba(255,255,255,.55);--gb:rgba(255,255,255,.8);--pill:#000;--pillt:#fff;--inp:rgba(255,255,255,.8);--ibd:#bbb;--cm:rgba(0,0,0,.07);--ind:rgba(255,255,255,.85);--sheet:rgba(255,255,255,.78);--blur:18px;--sat:180%;--gsh:inset 0 1px 0 #fff,inset 0 -1px 6px rgba(255,255,255,.4),0 8px 28px rgba(0,0,0,.12);--r:30px;--font:"Segoe UI",Roboto,Arial,sans-serif;--ls:-2.5px}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);overflow-x:hidden}
+.blobs{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.blobs i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(70px);opacity:.35;animation:float 18s ease-in-out infinite alternate}
+.blobs i:nth-child(1){background:#00966e;top:-20vmax;left:-15vmax}
+.blobs i:nth-child(2){background:#d62612;bottom:-25vmax;right:-15vmax;animation-delay:-6s}
+.blobs i:nth-child(3){background:#ccc;top:30%;left:35%;width:30vmax;height:30vmax;animation-delay:-11s}
+@keyframes float{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+#app{margin:0 auto;max-width:520px;padding:env(safe-area-inset-top) 0 40px}
+body.pc #app{max-width:1100px;padding:0 24px 40px}
+header{text-align:center;padding:22px 0 10px}
+.logo{font-size:44px;font-weight:900;letter-spacing:var(--ls);transition:opacity .3s,transform .3s}
+.logo.sw{opacity:0;transform:translateY(-8px)}
+.glass{background:var(--g);backdrop-filter:blur(var(--blur)) saturate(var(--sat));-webkit-backdrop-filter:blur(var(--blur)) saturate(var(--sat));border:1px solid var(--gb);box-shadow:var(--gsh)}
+nav{position:sticky;top:8px;z-index:20;display:flex;margin:0 14px;border-radius:26px;padding:5px}
+nav b{position:absolute;top:5px;bottom:5px;left:5px;width:calc(33.33% - 3.3px);border-radius:22px;background:var(--ind);box-shadow:0 2px 10px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.6);transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+nav button{flex:1;position:relative;background:none;border:0;font:700 17px inherit;font-family:inherit;padding:13px 4px;cursor:pointer;color:var(--ink)}
+.view{display:none;padding:0 14px}
+.view.on{display:block;animation:in .5s cubic-bezier(.2,.9,.3,1)}
+@keyframes in{from{opacity:0;transform:translateY(18px)}}
+.banner{margin:18px 0;height:96px;border-radius:22px;position:relative;overflow:hidden;cursor:pointer;background:linear-gradient(#fff 33%,#00966e 33% 66%,#d62612 66%);box-shadow:0 8px 24px rgba(0,0,0,.2);transition:transform .25s}
+.banner:active{transform:scale(.97)}
+.banner .t{position:absolute;left:14px;top:50%;width:62%;transform:translateY(-50%);font-weight:800;font-size:18px;line-height:1.25;color:#000;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 6px #fff;letter-spacing:-.5px;transition:opacity .5s,transform .5s}
+.banner .t.o{opacity:0;transform:translateY(-30%)}
+.banner svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);height:84px;animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-54%) rotate(2deg)}}
+.pill{display:block;width:88%;margin:6px auto 16px;background:var(--pill);color:var(--pillt);text-align:center;font-size:22px;padding:22px 10px;border-radius:var(--r);box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:0 2px 14px;scrollbar-width:none}
+.cats button{flex:none;border:1px solid #fff;padding:8px 15px;border-radius:20px;font:600 14px inherit;font-family:inherit;cursor:pointer;background:var(--g);backdrop-filter:blur(12px);transition:.2s}
+.cats button.on{background:var(--pill);color:var(--pillt)}
+.list{display:grid;gap:16px}
+body.pc .list{grid-template-columns:repeat(2,1fr)}
+.card{display:flex;height:150px;border-radius:var(--r);overflow:hidden;background:var(--card);color:#fff;cursor:pointer;position:relative;opacity:0;animation:pop .6s cubic-bezier(.2,.9,.3,1) forwards;transition:transform .25s,box-shadow .25s;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.card:hover{transform:translateY(-4px) scale(1.01)}
+.card:active{transform:scale(.97)}
+@keyframes pop{from{opacity:0;transform:translateY(30px) scale(.94)}to{opacity:1}}
+.card .im{width:38%;background:#000 center/cover;display:flex;align-items:center;justify-content:center;font-size:40px;flex:none;border-radius:var(--r) 0 0 var(--r)}
+.card .tx{padding:14px 14px 12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+.card h3{font-size:16px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.card small{opacity:.75;font-size:12px}
+.hot{position:absolute;top:10px;right:16px;font-weight:700;color:#ffe600;text-shadow:0 1px 3px #000;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.35}}
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.35);backdrop-filter:blur(6px)}
+.modal.on{display:flex;animation:fade .3s}
+@keyframes fade{from{opacity:0}}
+.sheet{width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:32px 32px 0 0;padding:20px;background:var(--sheet);animation:up .45s cubic-bezier(.2,.9,.3,1)}
+body.pc .modal{align-items:center}body.pc .sheet{border-radius:32px}
+@keyframes up{from{transform:translateY(100%)}}
+.sheet .hero{height:200px;border-radius:24px;background:#000 center/cover;display:flex;align-items:center;justify-content:center;font-size:64px;margin-bottom:14px}
+.sheet h2{letter-spacing:-.5px;margin-bottom:6px}.sheet p{line-height:1.55;margin:10px 0}
+.meta{opacity:.6;font-size:13px}
+.x{float:right;border:0;background:var(--pill);color:var(--pillt);width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
+.cm{background:var(--cm);border-radius:16px;padding:10px 12px;margin:8px 0;font-size:14px;animation:in .3s}
+.row{display:flex;gap:8px;margin-top:10px}
+input,select,textarea{font:inherit;padding:12px 14px;border-radius:16px;border:1px solid var(--ibd);background:var(--inp);color:var(--ink);width:100%}
+.btn{border:0;background:var(--pill);color:var(--pillt);border-radius:16px;padding:12px 18px;font:700 15px inherit;font-family:inherit;cursor:pointer;transition:transform .15s;white-space:nowrap}
+.btn:active{transform:scale(.93)}
+.box{border-radius:26px;padding:18px;margin-bottom:14px}
+.box h4{margin-bottom:10px}.box small{opacity:.65;display:block;margin-top:6px}
+.av{width:88px;height:88px;border-radius:50%;background:var(--pill);color:var(--pillt);font-size:40px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:6px auto 12px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.lang{display:flex;gap:8px;flex-wrap:wrap}.lang .btn{flex:1;background:var(--inp);color:var(--ink);border:1px solid var(--ink)}.lang .btn.on{background:var(--pill);color:var(--pillt)}
+.load{text-align:center;padding:30px;animation:blink 1s infinite}
+#sbtn{position:absolute;right:16px;top:20px;width:46px;height:46px;border-radius:50%;border:0;cursor:pointer;font-size:20px;transition:transform .2s}
+#sbtn:active{transform:scale(.88)}header{position:relative}
+.sb{display:flex;gap:8px;align-items:center;border-radius:24px;padding:6px 8px 6px 16px;margin:6px 0 14px;max-height:0;opacity:0;overflow:hidden;padding-top:0;padding-bottom:0;border-width:0;transition:max-height .4s,opacity .3s,padding .3s}
+.sb.on{max-height:70px;opacity:1;padding-top:6px;padding-bottom:6px;border-width:1px}
+.sb input{border:0;background:none;padding:10px 4px;outline:none}
+.empty{text-align:center;opacity:.6;padding:30px}
+footer{text-align:center;font-size:12px;opacity:.5;margin-top:24px}
+body[data-theme=dark]{--ink:#f2f2f5;--bg:#0b0b10;--g:rgba(40,40,48,.55);--gb:rgba(255,255,255,.14);--inp:rgba(255,255,255,.1);--ibd:#555;--cm:rgba(255,255,255,.1);--ind:rgba(255,255,255,.22);--sheet:rgba(24,24,30,.84);--card:#2b2b33;--gsh:inset 0 1px 0 rgba(255,255,255,.2),0 8px 28px rgba(0,0,0,.5)}
+body[data-theme=dark] .blobs i{opacity:.2}
+body[data-glass=frost]{--blur:34px;--sat:110%;--g:rgba(255,255,255,.72);--gsh:0 4px 20px rgba(0,0,0,.08)}
+body[data-theme=dark][data-glass=frost]{--g:rgba(40,40,48,.78);--gsh:0 4px 20px rgba(0,0,0,.4)}
+body[data-glass=game]{--blur:0px;--sat:100%;--r:12px;--g:#fff;--gb:#000;--gsh:4px 4px 0 #000;--ind:#ffd23f;--sheet:#fff;background-image:linear-gradient(rgba(0,0,0,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.06) 1px,transparent 1px);background-size:24px 24px}
+body[data-theme=dark][data-glass=game]{--g:#1d1d26;--gb:#fff;--sheet:#1d1d26;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px)}
+body[data-glass=game] .blobs{display:none}
+body[data-glass=game] .glass{border-width:3px}
+body[data-glass=game] nav{border-radius:14px}body[data-glass=game] nav b{border-radius:9px;border:2px solid #000}
+body[data-glass=game] .box,body[data-glass=game] .sb{border-radius:14px}
+body[data-glass=game] .sheet{border-radius:16px 16px 0 0}
+body[data-glass=game] .cats button{border:2px solid #000;border-radius:8px;color:#000;background:#fff}
+body[data-glass=game] .cats button.on{background:var(--pill);color:var(--pillt)}
+body[data-glass=game] .card,body[data-glass=game] .pill,body[data-glass=game] .banner,body[data-glass=game] .btn{border:3px solid #000;box-shadow:4px 4px 0 #000}
+body[data-glass=game] .banner{border-radius:12px}
+body[data-glass=game] .btn:active{transform:translate(3px,3px);box-shadow:none}
+body[data-font=serif]{--font:Georgia,"Times New Roman",serif}
+body[data-font=rounded]{--font:Nunito,"Trebuchet MS",sans-serif}
+body[data-font=mono]{--font:"Courier New",monospace;--ls:-1px}
+body[data-font=pixel]{--font:"Press Start 2P","Courier New",monospace;--ls:0}
+body[data-font=pixel] .logo{font-size:24px;line-height:1.3}body[data-font=pixel] .card h3{font-size:10px;line-height:1.5}body[data-font=pixel] nav button{font-size:9px}body[data-font=pixel] .banner .t{font-size:10px;line-height:1.6}body[data-font=pixel] .pill{font-size:13px}body[data-font=pixel] .card small{font-size:7px;line-height:1.6}body[data-font=pixel] .sheet{font-size:11px}body[data-font=pixel] .sheet h2{font-size:14px;line-height:1.4}body[data-font=pixel] .cats button,body[data-font=pixel] .btn{font-size:9px}
+#splash{position:fixed;inset:0;z-index:100;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .6s,transform .6s}
+#splash.off{opacity:0;transform:scale(1.06);pointer-events:none}
+#splash .sl{font-size:48px;font-weight:900;letter-spacing:var(--ls);animation:in .8s}
+#splash .st{font-size:20px;font-weight:700}
+#splash .pen{font-size:46px;animation:wig 1s ease-in-out infinite}
+@keyframes wig{0%,100%{transform:rotate(-12deg) translateX(-10px)}50%{transform:rotate(12deg) translateX(10px)}}
+.dots{display:flex;gap:8px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--ink);animation:dt 1s infinite}.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dt{50%{transform:translateY(-10px);opacity:.35}}
+body[data-font=pixel] #splash .sl{font-size:22px}body[data-font=pixel] #splash .st{font-size:12px}
+</style>
+</head>
+<body>
+<div class="blobs"><i></i><i></i><i></i></div>
+<div id="splash"><div class="sl" id="sl"></div><div class="pen">✍️</div><div class="st" id="sst"></div><div class="dots"><i></i><i></i><i></i></div></div>
+<div id="app">
+ <header><div class="logo" id="logo">естествено!</div><button id="sbtn" class="glass" aria-label="search">🔍</button></header>
+ <nav class="glass" id="nav"><b id="ind"></b>
+  <button data-v="news"></button><button data-v="me"></button><button data-v="set"></button></nav>
+
+ <section class="view on" id="news">
+  <div class="banner" id="banner">
+   <div class="t" id="bt"></div>
+   <svg viewBox="0 0 120 80"><path d="M3 20 12 10 26 14 34 5 52 9 64 4 80 8 100 4 117 14 111 30 116 44 100 52 104 62 86 60 70 70 52 66 36 74 22 64 26 52 8 44 14 32Z" fill="#000" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg>
+  </div>
+  <div class="pill" id="pill"></div>
+  <div class="sb glass" id="sb"><span>🔍</span><input id="q" type="search" autocomplete="off"><button class="btn" id="qx">✕</button></div>
+  <div class="lang" id="src" style="margin-bottom:12px"></div>
+  <div class="cats" id="cats"></div>
+  <div class="list" id="list"></div>
+ </section>
+
+ <section class="view" id="me"><div id="meBox"></div></section>
+
+ <section class="view" id="set">
+  <div class="box glass" style="margin-top:18px"><h4 id="lh"></h4>
+   <div class="lang" id="langs"><button class="btn" data-l="bg">Български</button><button class="btn" data-l="en">English</button></div></div>
+  <div id="opts"></div>
+ </section>
+</div>
+
+<div class="modal" id="md"><div class="sheet glass" id="sh"></div></div>
+
+<script>
+// ==== KEY ====
+const PIXABAY_KEY='58253844-ec7ef7df3739fa0c109cb9fba';  // Pixabay key (for article photos)
+// =============================
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const S={get(k,d){try{const v=localStorage.getItem('es_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('es_'+k,JSON.stringify(v))}catch(e){}}};
+const T={bg:{name:'естествено!',tabs:['Новини','Аз','Настройки'],pill:'Най-новите новини',all:'Всички',hot:'Горещо!!',by:'от',cm:'Коментари',ph:'Напиши коментар...',send:'Прати',nm:'Твоето име',save:'Запази',my:'Моите коментари',none:'Още няма коментари',lang:'Език',keys:'ИИ и снимки',kn:'Без ключ се показват примерни новини. Pixabay ключът дава снимки към статиите.',skk:'Запази ключовете',rf:'Нови новини сега',load:'Пишем новините!',ft:'Новините са генерирани с ИИ',sp:'Търси новини...',theme:'Тема',th:['Светла','Тъмна','Авто'],style:'Стил',st:['Течно стъкло','Матово стъкло','2D игра'],accent:'Цвят',font:'Шрифт',fn:['Стандартен','Сериен','Закръглен','Моно','Пиксели'],nodata:'Няма резултати',def:['Кой ще е президент?','Вие гласувахте ли?'],guest:'Гост',su:'Регистрация',li:'Вход',un:'Потребителско име',pw:'Парола',join:'Стани автор в Естествено!',write:'Напиши статия',pub:'Публикувай',myart:'Моите статии',out:'Изход',writer:'Автор',ttl:'Заглавие',txt:'Текст на статията...',img:'Линк към снимка (по желание)',e1:'Името е заето',e2:'Грешно име или парола',e3:'Име 2–20 символа (без __ в началото), парола поне 4',e4:'Заглавие поне 5 и текст поне 20 символа',sa:'Всички',sai:'Естествено автор',sur:'От читатели',del:'Изтрий',auth:'Естествено автор'},
+ en:{name:'of course!',tabs:['News','Me','Settings'],pill:'Latest news',all:'All',hot:'Hot!!',by:'by',cm:'Comments',ph:'Write a comment...',send:'Send',nm:'Your name',save:'Save',my:'My comments',none:'No comments yet',lang:'Language',keys:'AI & photos',kn:'Without a key you get sample news. A Pixabay key gives article photos.',skk:'Save keys',rf:'Fresh news now',load:'Writing the news!',ft:'News is generated by AI',sp:'Search news...',theme:'Theme',th:['Light','Dark','Auto'],style:'Style',st:['Liquid glass','Frost glass','2D game'],accent:'Color',font:'Font',fn:['Default','Serif','Rounded','Mono','Pixel'],nodata:'No results',def:['Who will be president?','Did you vote?'],guest:'Guest',su:'Sign up',li:'Log in',un:'Username',pw:'Password',join:'Become a writer at of course!',write:'Write an article',pub:'Publish',myart:'My articles',out:'Log out',writer:'Writer',ttl:'Title',txt:'Article text...',img:'Photo link (optional)',e1:'Name is taken',e2:'Wrong name or password',e3:'Name 2–20 chars (no leading __), password 4+',e4:'Title needs 5+ and text 20+ characters',sa:'All',sai:'Estestveno Author',sur:'From readers',del:'Delete',auth:'Estestveno Author'}};
+const NAMES=['Иван Петров','Мария Георгиева','Георги Димитров','Елена Стоянова','Николай Тодоров','Силвия Иванова','Борис Колев','Десислава Атанасова','Петър Маринов','Ралица Христова','Калоян Илиев','Теодора Янева'];
+const NAMES_EN=['Ivan Petrov','Maria Georgieva','Georgi Dimitrov','Elena Stoyanova','Nikolay Todorov','Silvia Ivanova','Boris Kolev','Desislava Atanasova','Peter Marinov','Ralitsa Hristova','Kaloyan Iliev','Teodora Yaneva'];
+const EMO={war:'🪖',school:'🎒',local:'📍',politics:'🏛️',cool:'😎',food:'🍳',sport:'⚽',tech:'💡',world:'🌍',culture:'🎭'};
+const CATN={bg:{war:'Войни',school:'Училище',local:'Местни',politics:'Политика',cool:'Готино',food:'Готвене',sport:'Спорт',tech:'Техника',world:'Свят',culture:'Култура'},en:{war:'Wars',school:'School',local:'Local',politics:'Politics',cool:'Cool stuff',food:'Cooking',sport:'Sport',tech:'Tech',world:'World',culture:'Culture'}};
+const SAMPLE={bg:[
+{t:'Нов закон за велоалеите минава на първо четене',b:'Депутатите подкрепиха идеята за повече безопасни велоалеи в големите градове. Очаква се промените да влязат в сила от следващата година.\n\nГрадските власти вече подготвят първите маршрути.',c:'politics',hot:1,q:'bicycle lane city'},
+{t:'Рецептата, която превзема соцмрежите: баница за 15 минути',b:'Бърз вариант на класическата баница с точно три съставки. Тайната е в добре разтегнатите кори и малко газирана вода.\n\nГотова е докато се стопли фурната.',c:'food',q:'banitsa'},
+{t:'Млад изобретател направи слънчева раница, която зарежда телефони',b:'Шестнайсетгодишен ученик от Пловдив показа прототип на раница с вградени слънчеви панели. Идеята вече има интерес от инвеститори.',c:'cool',q:'solar backpack'},
+{t:'Купата на България: драматичен финал в добавеното време',b:'Мачът се реши в последната минута след прекрасен удар отстрани на наказателното поле. Трибуните не млъкнаха до края.',c:'sport',q:'football stadium'},
+{t:'Нова изложба в София събира художници от цяла Европа',b:'Над сто творби ще бъдат показани в продължение на месец. Входът за ученици и студенти е безплатен.',c:'culture',q:'art gallery'}],
+en:[
+{t:'New bike lane law passes first reading',b:'Lawmakers backed the idea of more safe bike lanes in big cities. The changes are expected to take effect next year.\n\nCity authorities are already preparing the first routes.',c:'politics',hot:1,q:'bicycle lane city'},
+{t:'The recipe taking over social media: banitsa in 15 minutes',b:'A quick take on the classic banitsa with just three ingredients. The secret is well-stretched phyllo and a splash of sparkling water.',c:'food',q:'banitsa'},
+{t:'Teen inventor builds a solar backpack that charges phones',b:'A sixteen-year-old from Plovdiv showed a prototype backpack with built-in solar panels. Investors are already interested.',c:'cool',q:'solar backpack'},
+{t:'National Cup: dramatic final decided in stoppage time',b:'The match was settled in the last minute with a lovely strike from the edge of the box. The stands never went quiet.',c:'sport',q:'football stadium'},
+{t:'New Sofia exhibition brings together artists from across Europe',b:'Over a hundred works will be shown for a month. Entry is free for students.',c:'culture',q:'art gallery'}]};
+let AI=[],SRC='all',AM='up',LD='',lastTry=0,sampleShown=false,ERR='',Q='',L=S.get('lang','bg'),A=[],cat='all',cur=null,banIdx=0,banTimer;
+const tx=()=>T[L];
+const today=()=>new Date().toISOString().slice(0,10);
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+
+// device ratio
+function dev(){const pc=innerWidth>760&&!matchMedia('(pointer:coarse)').matches;document.body.classList.toggle('pc',pc)}
+addEventListener('resize',dev);dev();
+
+// tabs
+function go(v){const i=['news','me','set'].indexOf(v);$('#ind').style.transform=`translateX(${i*100}%)`;$$('.view').forEach(e=>e.classList.toggle('on',e.id===v));$$('nav button').forEach((b,j)=>b.style.opacity=j===i?1:.55);if(v==='me')renderMe()}
+$$('nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+
+function ui(){const t=tx();document.documentElement.lang=L;document.title=t.name;
+ const lg=$('#logo');lg.classList.add('sw');setTimeout(()=>{lg.textContent=t.name;lg.classList.remove('sw')},250);
+ $$('nav button').forEach((b,i)=>b.textContent=t.tabs[i]);
+ $('#pill').textContent=t.pill;$('#q').placeholder=t.sp;renderSrc();
+ $('#lh').textContent=t.lang;renderOpts();
+ $$('#langs .btn').forEach(b=>b.classList.toggle('on',b.dataset.l===L));renderCats();renderMe();setBanners()}
+
+// banners (president banner follows newest news)
+function bannerLines(){const t=tx();const lines=[];const p=A.find(a=>a.banner&&a.banner.length);
+ lines.push(p?p.banner:t.def);
+ if(A[0])lines.push([A[0].t.slice(0,48)+(A[0].t.length>48?'…':''),'']);
+ return lines}
+function setBanners(){clearInterval(banTimer);const ls=bannerLines();banIdx=0;show(ls[0]);
+ if(ls.length>1)banTimer=setInterval(()=>{banIdx=(banIdx+1)%ls.length;const e=$('#bt');e.classList.add('o');setTimeout(()=>{show(ls[banIdx]);e.classList.remove('o')},450)},5000)}
+function show(l){$('#bt').innerHTML=l.filter(Boolean).join('<br>')}
+$('#banner').onclick=()=>{const p=A.find(a=>a.banner&&a.banner.length)||A[0];if(p)open(A.indexOf(p))};
+
+// data
+async function load(force){
+ ERR='';let sample=false;lastTry=Date.now();LD=today();
+ const key=`news2_${L}_${today()}`;let d=!force&&S.get(key,null);
+ $('#list').innerHTML=`<div class="load">${tx().load}</div>`;
+ if(!d)sample=true,d=SAMPLE[L].map((a,i)=>({...a,banner:i===0?(L==='bg'?['Нов закон: велоалеи','Какво мислите вие?']:['New law: bike lanes','What do you think?']):null}));
+ d=d.map((a,i)=>({...a,date:a.d||a.date||today(),id:today()+L+i,w:a.w||pick(L==='bg'?NAMES:NAMES_EN)}));
+ S.set(key,d);sampleShown=false;AI=d;rebuild();try{Object.keys(localStorage).filter(k=>k.startsWith('es_news')&&!k.includes(today())).forEach(k=>localStorage.removeItem(k))}catch(e){}
+ renderList();setBanners();fetchImgs()}
+async function fetchImgs(){const pk=PIXABAY_KEY||S.get('gk','');if(!pk)return;
+ for(const a of A){if(a.img||a.u)continue;try{const r=await fetch(`https://pixabay.com/api/?key=${pk}&q=${encodeURIComponent(a.q||a.t)}&image_type=photo&orientation=horizontal&safesearch=true&per_page=3`);const j=await r.json();if(j.hits&&j.hits[0]){a.img=j.hits[0].webformatURL;const e=document.querySelector(`[data-i="${A.indexOf(a)}"] .im`);if(e){e.style.backgroundImage=`url("${a.img}")`;e.textContent=''}}}catch(e){}}
+ S.set(`news2_${L}_${today()}`,AI)}
+
+function renderCats(){const c=CATN[L],t=tx();const used=[...new Set(A.map(a=>a.c))];
+ $('#cats').innerHTML=`<button data-c="all" class="${cat==='all'?'on':''}">${t.all}</button>`+used.map(k=>`<button data-c="${k}" class="${cat===k?'on':''}">${c[k]||k}</button>`).join('');
+ $$('#cats button').forEach(b=>b.onclick=()=>{cat=b.dataset.c;renderCats();renderList()})}
+function renderList(){const t=tx();renderCats();
+ $('#list').innerHTML=A.map((a,i)=>({a,i})).filter(x=>(cat==='all'||x.a.c===cat)&&(SRC==='all'||(SRC==='ai')===!x.a.u)&&(!Q||(x.a.t+' '+x.a.b+' '+x.a.w).toLowerCase().includes(Q))).map((x,n)=>`<div class="card" data-i="${x.i}" style="animation-delay:${n*70}ms">
+  <div class="im" style="${x.a.img?`background-image:url('${x.a.img}')`:''}">${x.a.img?'':EMO[x.a.c]||'📰'}</div>
+  <div class="tx">${x.a.hot?`<span class="hot">${t.hot}</span>`:''}<h3 style="${x.a.hot?'margin-top:22px':''}">${esc(x.a.t)}</h3><small>${t.by} ${esc(x.a.w)} · ${x.a.u?'✍️ '+t.writer:t.auth}<br>${CATN[L][x.a.c]||''} · 📅 ${fd(x.a.date)}</small></div></div>`).join('');
+ if(ERR)$('#list').insertAdjacentHTML('afterbegin',`<div class="empty">⚠️ ${esc(ERR)}</div>`);
+ if(!$('#list').children.length)$('#list').innerHTML=`<div class="empty">${t.nodata}</div>`;
+ $$('.card').forEach(c=>c.onclick=()=>open(+c.dataset.i))}
+const fd=d=>new Date(d+'T12:00:00').toLocaleDateString(L==='bg'?'bg-BG':'en-GB',{day:'numeric',month:'long',year:'numeric'});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// article + comments
+const CM=()=>S.get('cm',{});
+function open(i){cur=i;const a=A[i],t=tx();
+ $('#sh').innerHTML=`<button class="x" id="cx">✕</button>
+ <div class="hero" style="${a.img?`background-image:url('${a.img}')`:''}">${a.img?'':EMO[a.c]||'📰'}</div>
+ <h2>${esc(a.t)}</h2><div class="meta">${t.by} ${esc(a.w)} · ${a.u?'✍️ '+t.writer:t.auth} · 📅 ${fd(a.date)}</div>
+ ${a.b.split(/\n+/).map(p=>`<p>${esc(p)}</p>`).join('')}
+ <h4 style="margin-top:16px">${t.cm}</h4><div id="cl"></div>
+ <div class="row"><input id="ci" placeholder="${t.ph}"><button class="btn" id="cs">${t.send}</button></div>`;
+ $('#md').classList.add('on');drawCm();
+ $('#cx').onclick=close;$('#cs').onclick=addCm;$('#ci').onkeydown=e=>{if(e.key==='Enter')addCm()}}
+function close(){$('#md').classList.remove('on')}
+$('#md').onclick=e=>{if(e.target.id==='md')close()};
+function drawCm(){const l=(CM()[A[cur].id]||[]);$('#cl').innerHTML=l.length?l.map(c=>`<div class="cm"><b>${esc(c.n)}</b><br>${esc(c.x)}</div>`).join(''):`<div class="meta">${tx().none}</div>`}
+function addCm(){const v=$('#ci').value.trim();if(!v)return;const all=CM(),id=A[cur].id;(all[id]=all[id]||[]).push({n:S.get('me','')||tx().guest,x:v,t:A[cur].t});S.set('cm',all);$('#ci').value='';drawCm()}
+// writers & accounts (stored on this device)
+const hs=x=>{let h=5381;for(const c of String(x))h=((h<<5)+h+c.charCodeAt(0))|0;return String(h)};
+const UA=()=>S.get('uart',[]);
+function rebuild(){A=AI.concat(UA())}
+function renderSrc(){const t=tx();$('#src').innerHTML=[['all',t.sa],['ai',t.sai],['user',t.sur]].map(([v,l])=>`<button class="btn ${SRC===v?'on':''}" data-s="${v}">${l}</button>`).join('')}
+$('#src').onclick=e=>{const b=e.target.closest('[data-s]');if(!b)return;SRC=b.dataset.s;renderSrc();renderList()};
+function renderMe(){const t=tx(),me=S.get('me','');let h='';
+ if(!me){h=`<div class="box glass" style="margin-top:18px;text-align:center"><div class="av">?</div><h4>${t.join}</h4>
+  <div class="lang" style="margin:10px 0"><button class="btn ${AM==='up'?'on':''}" data-m="up">${t.su}</button><button class="btn ${AM==='in'?'on':''}" data-m="in">${t.li}</button></div>
+  <input id="un" maxlength="20" placeholder="${t.un}" autocomplete="username"><input id="pw" type="password" placeholder="${t.pw}" style="margin-top:10px" autocomplete="current-password">
+  <div id="mm" class="meta" style="margin:8px 0;color:#d62612"></div><button class="btn" data-m="go" style="width:100%">${AM==='up'?t.su:t.li}</button></div>`}
+ else{const mine=UA().filter(a=>a.w===me);
+  h=`<div class="box glass" style="margin-top:18px;text-align:center"><div class="av">${esc(me[0].toUpperCase())}</div><h3>${esc(me)}</h3><div class="meta">✍️ ${t.writer}</div>
+  <div class="row"><button class="btn" data-m="write" style="flex:1">${t.write}</button><button class="btn" data-m="out" style="flex:none;background:var(--inp);color:var(--ink)">${t.out}</button></div></div>
+  <div class="box glass"><h4>${t.myart}</h4>${mine.length?mine.map(a=>`<div class="cm"><b>${esc(a.t)}</b><br><small>📅 ${fd(a.date)}</small> <button class="btn" data-m="del" data-id="${a.id}" style="padding:4px 10px;font-size:12px;float:right">${t.del}</button></div>`).join(''):`<div class="meta">${t.none}</div>`}</div>`}
+ const mc=Object.values(CM()).flat().filter(c=>c.n===(me||t.guest));
+ h+=`<div class="box glass"><h4>${t.my}</h4>${mc.length?mc.slice().reverse().map(c=>`<div class="cm"><small>${esc(c.t||'')}</small><br>${esc(c.x)}</div>`).join(''):`<div class="meta">${t.none}</div>`}</div>`;
+ $('#meBox').innerHTML=h}
+$('#meBox').onclick=e=>{const b=e.target.closest('[data-m]');if(!b)return;const m=b.dataset.m,t=tx();
+ if(m==='up'||m==='in'){AM=m;renderMe();return}
+ if(m==='go'){const n=$('#un').value.trim(),p=$('#pw').value,U=S.get('users',{});
+  if(n.length<2||p.length<4||/^__/.test(n)){$('#mm').textContent=t.e3;return}
+  if(AM==='up'){if(Object.prototype.hasOwnProperty.call(U,n)){$('#mm').textContent=t.e1;return}U[n]={h:hs(p)};S.set('users',U)}
+  else if(!Object.prototype.hasOwnProperty.call(U,n)||U[n].h!==hs(p)){$('#mm').textContent=t.e2;return}
+  S.set('me',n);renderMe();return}
+ if(m==='out'){S.set('me','');renderMe();return}
+ if(m==='write'){editor();return}
+ if(m==='del'){S.set('uart',UA().filter(a=>a.id!==b.dataset.id));rebuild();renderList();renderMe()}};
+function editor(){const t=tx();cur=null;
+ $('#sh').innerHTML=`<button class="x" id="cx">✕</button><h2>${t.write}</h2>
+ <input id="et" maxlength="100" placeholder="${t.ttl}" style="margin-top:10px"><select id="ec" style="margin-top:10px">${Object.keys(CATN[L]).map(k=>`<option value="${k}">${CATN[L][k]}</option>`).join('')}</select>
+ <textarea id="eb" rows="9" maxlength="6000" placeholder="${t.txt}" style="margin-top:10px"></textarea>
+ <input id="ei" placeholder="${t.img}" style="margin-top:10px"><div id="em" class="meta" style="margin:8px 0;color:#d62612"></div><button class="btn" id="ep" style="width:100%">${t.pub}</button>`;
+ $('#md').classList.add('on');$('#cx').onclick=close;
+ $('#ep').onclick=()=>{const ti=$('#et').value.trim(),bo=$('#eb').value.trim(),im=$('#ei').value.trim();
+  if(ti.length<5||bo.length<20){$('#em').textContent=t.e4;return}
+  const a={id:'u'+Date.now(),t:ti,b:bo,c:$('#ec').value,w:S.get('me',''),date:today(),u:1,q:ti};
+  if(/^https?:\/\/[^\s'"()<>]+$/.test(im))a.img=im;
+  S.set('uart',[a,...UA()].slice(0,100));rebuild();SRC='user';cat='all';renderSrc();renderList();close();go('news')}}
+
+// search
+function sOpen(on){go('news');$('#sb').classList.toggle('on',on);if(on)setTimeout(()=>$('#q').focus(),300);else{Q='';$('#q').value='';renderList()}}
+$('#sbtn').onclick=()=>sOpen(!$('#sb').classList.contains('on')||!$('#news').classList.contains('on'));
+$('#q').oninput=e=>{Q=e.target.value.trim().toLowerCase();renderList()};
+$('#qx').onclick=()=>sOpen(false);
+// look & feel
+const ACC=['#000000','#d62612','#00966e','#1e6fff','#7a3cff','#e8590c','#e0368a'];
+let C=Object.assign({theme:'light',glass:'liquid',acc:'#000000',font:'sans'},S.get('cfg',{}));
+function applyCfg(){const b=document.body;const dark=C.theme==='dark'||(C.theme==='auto'&&matchMedia('(prefers-color-scheme:dark)').matches);
+ b.dataset.theme=dark?'dark':'light';b.dataset.glass=C.glass;b.dataset.font=C.font;
+ const inv=C.acc==='#000000'&&dark&&C.glass!=='game';b.style.setProperty('--pill',inv?'#fff':C.acc);b.style.setProperty('--pillt',inv?'#000':'#fff');
+ const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0b0b10':'#ffffff'}
+function grp(h,k,vals,labels){return `<div class="box glass"><h4>${h}</h4><div class="lang">${vals.map((v,i)=>`<button class="btn ${C[k]===v?'on':''}" data-k="${k}" data-v="${v}">${labels[i]}</button>`).join('')}</div></div>`}
+function renderOpts(){const t=tx();
+ $('#opts').innerHTML=grp(t.theme,'theme',['light','dark','auto'],t.th)+grp(t.style,'glass',['liquid','frost','game'],t.st)
+ +`<div class="box glass"><h4>${t.accent}</h4><div class="lang">${ACC.map(c=>`<button class="btn" data-k="acc" data-v="${c}" style="flex:none;width:44px;height:44px;padding:0;border-radius:50%;background:${c};border:3px solid ${C.acc===c?'var(--ink)':'transparent'}"></button>`).join('')}</div></div>`
+ +grp(t.font,'font',['sans','serif','rounded','mono','pixel'],t.fn)}
+$('#opts').onclick=e=>{const b=e.target.closest('[data-k]');if(!b)return;C[b.dataset.k]=b.dataset.v;S.set('cfg',C);applyCfg();renderOpts()};
+matchMedia('(prefers-color-scheme:dark)').addEventListener&&matchMedia('(prefers-color-scheme:dark)').addEventListener('change',applyCfg);
+applyCfg();
+// settings
+$$('#langs .btn').forEach(b=>b.onclick=()=>{L=b.dataset.l;S.set('lang',L);ui();load()});
+
+// daily refresh: new day, or retry if only sample news is showing
+function tick(){if(today()!==LD||(sampleShown&&Date.now()-lastTry>600000))load()}
+setInterval(tick,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()});
+$('#sl').textContent=tx().name;$('#sst').textContent=tx().load;
+ui();go('news');const t0=Date.now();
+const hide=()=>{const e=$('#splash');if(!e)return;e.classList.add('off');setTimeout(()=>e.remove(),700)};
+load().then(()=>setTimeout(hide,Math.max(0,1600-(Date.now()-t0)))).catch(hide);setTimeout(hide,120000);
+</script>
+</body>
+</html>
